@@ -79,3 +79,26 @@ footer {
   font-size: 0.85rem;
   border-top: 1px solid #eee;
 }
+
+/* Landing page */
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
+}
+
+.landing-image img {
+  width: 70%;
+  max-width: 900px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+.landing-caption {
+  font-style: italic;
+  color: #555;
+  font-size: 0.9rem;
+}
+
