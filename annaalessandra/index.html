@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anna Alessandra — Photography & Art</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav-logo">Anna Alessandra</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Work</a></li>
+      <li><a href="blog.html">Journal</a></li>
+      <li><a href="snake.html">Play</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-grain"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Photography & Art</p>
+      <h1 class="hero-title">
+        <span class="hero-line">Anna</span>
+        <span class="hero-line italic">Alessandra</span>
+      </h1>
+      <p class="hero-sub">Capturing light, texture, and the quiet in-between moments.</p>
+      <a href="#portfolio" class="btn-primary">View Work</a>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about section" id="about">
+    <div class="container about-grid">
+      <div class="about-image-wrap">
+        <div class="about-img-placeholder">
+          <div class="img-label">Your portrait here</div>
+        </div>
+        <div class="about-accent-box"></div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">About</p>
+        <h2 class="section-title">Drawn to light &amp; detail</h2>
+        <p>I'm Anna Alessandra — a photographer and artist based somewhere beautiful. My work explores the intersection of natural light, human emotion, and the textures that make a moment worth preserving.</p>
+        <p>Whether working in film or digital, portrait or landscape, I look for the warmth hiding in the ordinary.</p>
+        <a href="#contact" class="btn-outline">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio section" id="portfolio">
+    <div class="container">
+      <p class="section-label">Work</p>
+      <h2 class="section-title">Selected pieces</h2>
+
+      <div class="portfolio-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="photography">Photography</button>
+        <button class="filter-btn" data-filter="art">Art</button>
+        <button class="filter-btn" data-filter="editorial">Editorial</button>
+      </div>
+
+      <div class="portfolio-grid" id="portfolioGrid">
+        <!-- Items injected by JS, placeholders shown here -->
+        <div class="portfolio-item" data-category="photography">
+          <div class="portfolio-img-wrap">
+            <div class="portfolio-placeholder" style="background: #d4bfa8;">
+              <span>Photo 01</span>
+            </div>
+            <div class="portfolio-overlay">
+              <p class="portfolio-title">Golden Hour</p>
+              <p class="portfolio-cat">Photography</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item large" data-category="art">
+          <div class="portfolio-img-wrap">
+            <div class="portfolio-placeholder" style="background: #b8a99a;">
+              <span>Art 01</span>
+            </div>
+            <div class="portfolio-overlay">
+              <p class="portfolio-title">Soft Still</p>
+              <p class="portfolio-cat">Art</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="editorial">
+          <div class="portfolio-img-wrap">
+            <div class="portfolio-placeholder" style="background: #c9b8a0;">
+              <span>Editorial 01</span>
+            </div>
+            <div class="portfolio-overlay">
+              <p class="portfolio-title">Spring Series</p>
+              <p class="portfolio-cat">Editorial</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="photography">
+          <div class="portfolio-img-wrap">
+            <div class="portfolio-placeholder" style="background: #e0cfc0;">
+              <span>Photo 02</span>
+            </div>
+            <div class="portfolio-overlay">
+              <p class="portfolio-title">Morning Mist</p>
+              <p class="portfolio-cat">Photography</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="art">
+          <div class="portfolio-img-wrap">
+            <div class="portfolio-placeholder" style="background: #a89080;">
+              <span>Art 02</span>
+            </div>
+            <div class="portfolio-overlay">
+              <p class="portfolio-title">Warm Study</p>
+              <p class="portfolio-cat">Art</p>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item large" data-category="photography">
+          <div class="portfolio-img-wrap">
+            <div class="portfolio-placeholder" style="background: #cdbfb0;">
+              <span>Photo 03</span>
+            </div>
+            <div class="portfolio-overlay">
+              <p class="portfolio-title">Late Afternoon</p>
+              <p class="portfolio-cat">Photography</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNAL PREVIEW -->
+  <section class="journal section" id="journal">
+    <div class="container">
+      <p class="section-label">Journal</p>
+      <h2 class="section-title">Recent writings</h2>
+      <div class="journal-grid" id="journalPreview">
+        <!-- Populated by JS -->
+      </div>
+      <div class="journal-cta">
+        <a href="blog.html" class="btn-outline">All entries →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact section" id="contact">
+    <div class="container contact-grid">
+      <div class="contact-text">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Let's work together</h2>
+        <p>Available for commissions, collaborations, and editorial projects. I'd love to hear what you have in mind.</p>
+        <ul class="contact-details">
+          <li><strong>Email</strong> hello@annaalessandra.com</li>
+          <li><strong>Instagram</strong> @annaalessandra</li>
+          <li><strong>Location</strong> Your City, Country</li>
+        </ul>
+      </div>
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <input type="text" id="name" placeholder="Your name" required />
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Your email" required />
+        </div>
+        <div class="form-group">
+          <textarea id="message" rows="5" placeholder="Tell me about your project…" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Send message</button>
+        <p class="form-note" id="formNote"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-logo">Anna Alessandra</p>
+      <p class="footer-copy">© <span id="year"></span> Anna Alessandra. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#portfolio">Work</a></li>
+        <li><a href="blog.html">Journal</a></li>
+        <li><a href="snake.html">Play</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

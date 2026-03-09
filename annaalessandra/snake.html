@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play — Anna Alessandra</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    .snake-page {
+      min-height: 100vh;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: calc(var(--nav-h) + 4rem) 1rem 5rem;
+    }
+
+    .snake-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .snake-header .section-label { text-align: center; }
+
+    .snake-header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--charcoal);
+      margin-bottom: 0.5rem;
+    }
+
+    .snake-header p {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--mid);
+    }
+
+    .snake-score-row {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .score-item {
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .score-value {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--charcoal);
+      line-height: 1;
+    }
+
+    .snake-wrap {
+      position: relative;
+      border: 1.5px solid var(--tan);
+      box-shadow: 4px 4px 0 var(--tan-light);
+    }
+
+    #snakeCanvas {
+      display: block;
+      background: var(--warm-white);
+    }
+
+    .snake-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(247,242,236,0.92);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1rem;
+    }
+
+    .snake-overlay h2 {
+      font-size: 2rem;
+      color: var(--charcoal);
+    }
+
+    .snake-overlay p {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--mid);
+    }
+
+    .snake-overlay.hidden { display: none; }
+
+    .snake-controls {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .snake-hint {
+      margin-top: 1.2rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--light-mid);
+      text-align: center;
+    }
+
+    /* Mobile arrow pad */
+    .arrow-pad {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 1.5rem;
+    }
+
+    .arrow-row {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .arrow-btn {
+      width: 52px; height: 52px;
+      background: var(--warm-white);
+      border: 1.5px solid var(--tan);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--charcoal);
+      transition: background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .arrow-btn:active { background: var(--tan-light); }
+
+    @media (max-width: 600px) {
+      .arrow-pad { display: flex; }
+      .snake-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <a href="index.html" class="nav-logo">Anna Alessandra</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#portfolio">Work</a></li>
+      <li><a href="blog.html">Journal</a></li>
+      <li><a href="snake.html">Play</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="snake-page">
+    <div class="snake-header">
+      <p class="section-label">A little break</p>
+      <h1>Play <em>a while</em></h1>
+      <p>Even artists need to play.</p>
+    </div>
+
+    <div class="snake-score-row">
+      <div class="score-item">
+        <span class="score-label">Score</span>
+        <span class="score-value" id="score">0</span>
+      </div>
+      <div class="score-item">
+        <span class="score-label">Best</span>
+        <span class="score-value" id="best">0</span>
+      </div>
+    </div>
+
+    <div class="snake-wrap">
+      <canvas id="snakeCanvas" width="420" height="420"></canvas>
+
+      <!-- Start screen -->
+      <div class="snake-overlay" id="startScreen">
+        <h2>Snake</h2>
+        <p>Use arrow keys or WASD to move</p>
+        <button class="btn-primary" id="startBtn">Start game</button>
+      </div>
+
+      <!-- Game over screen -->
+      <div class="snake-overlay hidden" id="gameOverScreen">
+        <h2>Game over</h2>
+        <p id="finalScore">You scored 0</p>
+        <button class="btn-primary" id="restartBtn">Play again</button>
+        <a href="index.html" class="btn-outline">Back to site</a>
+      </div>
+    </div>
+
+    <!-- Mobile controls -->
+    <div class="arrow-pad" id="arrowPad">
+      <div class="arrow-row">
+        <button class="arrow-btn" data-dir="UP">↑</button>
+      </div>
+      <div class="arrow-row">
+        <button class="arrow-btn" data-dir="LEFT">←</button>
+        <button class="arrow-btn" data-dir="DOWN">↓</button>
+        <button class="arrow-btn" data-dir="RIGHT">→</button>
+      </div>
+    </div>
+
+    <p class="snake-hint">Arrow keys or WASD to move &nbsp;·&nbsp; P to pause</p>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-logo">Anna Alessandra</p>
+      <p class="footer-copy">© <span id="year"></span> Anna Alessandra.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#portfolio">Work</a></li>
+        <li><a href="blog.html">Journal</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Nav
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    // ---- SNAKE GAME ----
+    const canvas = document.getElementById('snakeCanvas');
+    const ctx    = canvas.getContext('2d');
+    const CELL   = 21;
+    const COLS   = Math.floor(canvas.width / CELL);
+    const ROWS   = Math.floor(canvas.height / CELL);
+
+    // Colours matching site palette
+    const C = {
+      bg: '#fdf9f5',
+      grid: '#f0e9e0',
+      snake: '#b5644a',
+      snakeHead: '#6b4c3b',
+      food: '#c4a882',
+      foodDot: '#b5644a',
+      text: '#2e2420',
+    };
+
+    let snake, dir, nextDir, food, score, best, running, paused, loop;
+
+    function initGame() {
+      snake = [
+        { x: 10, y: 10 },
+        { x: 9,  y: 10 },
+        { x: 8,  y: 10 },
+      ];
+      dir     = { x: 1, y: 0 };
+      nextDir = { x: 1, y: 0 };
+      score   = 0;
+      paused  = false;
+      placeFood();
+      updateScore();
+    }
+
+    function placeFood() {
+      let pos;
+      do {
+        pos = {
+          x: Math.floor(Math.random() * COLS),
+          y: Math.floor(Math.random() * ROWS),
+        };
+      } while (snake.some(s => s.x === pos.x && s.y === pos.y));
+      food = pos;
+    }
+
+    function updateScore() {
+      document.getElementById('score').textContent = score;
+      best = Math.max(score, best || 0);
+      document.getElementById('best').textContent = best;
+    }
+
+    function step() {
+      dir = { ...nextDir };
+      const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+      // Wall collision
+      if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
+        return endGame();
+      }
+      // Self collision
+      if (snake.some(s => s.x === head.x && s.y === head.y)) {
+        return endGame();
+      }
+
+      snake.unshift(head);
+
+      if (head.x === food.x && head.y === food.y) {
+        score++;
+        updateScore();
+        placeFood();
+      } else {
+        snake.pop();
+      }
+
+      draw();
+    }
+
+    function draw() {
+      // Background
+      ctx.fillStyle = C.bg;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle grid
+      ctx.strokeStyle = C.grid;
+      ctx.lineWidth = 0.5;
+      for (let x = 0; x <= COLS; x++) {
+        ctx.beginPath();
+        ctx.moveTo(x * CELL, 0);
+        ctx.lineTo(x * CELL, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= ROWS; y++) {
+        ctx.beginPath();
+        ctx.moveTo(0, y * CELL);
+        ctx.lineTo(canvas.width, y * CELL);
+        ctx.stroke();
+      }
+
+      // Food
+      const fx = food.x * CELL + CELL / 2;
+      const fy = food.y * CELL + CELL / 2;
+      ctx.fillStyle = C.food;
+      ctx.beginPath();
+      ctx.arc(fx, fy, CELL / 2 - 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = C.foodDot;
+      ctx.beginPath();
+      ctx.arc(fx, fy, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Snake
+      snake.forEach((seg, i) => {
+        const px = seg.x * CELL + 1;
+        const py = seg.y * CELL + 1;
+        const sz = CELL - 2;
+        ctx.fillStyle = i === 0 ? C.snakeHead : C.snake;
+        ctx.beginPath();
+        ctx.roundRect(px, py, sz, sz, i === 0 ? 5 : 3);
+        ctx.fill();
+      });
+
+      // Pause overlay
+      if (paused) {
+        ctx.fillStyle = 'rgba(247,242,236,0.7)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = C.text;
+        ctx.font = '500 14px Jost, sans-serif';
+        ctx.letterSpacing = '0.2em';
+        ctx.textAlign = 'center';
+        ctx.fillText('PAUSED — press P', canvas.width / 2, canvas.height / 2);
+      }
+    }
+
+    function startGame() {
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('gameOverScreen').classList.add('hidden');
+      initGame();
+      running = true;
+      clearInterval(loop);
+      loop = setInterval(() => {
+        if (!paused) step();
+      }, 120);
+      draw();
+    }
+
+    function endGame() {
+      clearInterval(loop);
+      running = false;
+      document.getElementById('finalScore').textContent = `You scored ${score}`;
+      document.getElementById('gameOverScreen').classList.remove('hidden');
+    }
+
+    // Controls
+    const DIRS = {
+      ArrowUp:    { x: 0, y: -1 }, w: { x: 0, y: -1 }, W: { x: 0, y: -1 },
+      ArrowDown:  { x: 0,  y: 1 }, s: { x: 0,  y: 1 }, S: { x: 0,  y: 1 },
+      ArrowLeft:  { x: -1, y: 0 }, a: { x: -1, y: 0 }, A: { x: -1, y: 0 },
+      ArrowRight: { x: 1,  y: 0 }, d: { x: 1,  y: 0 }, D: { x: 1,  y: 0 },
+    };
+
+    document.addEventListener('keydown', e => {
+      if ((e.key === 'p' || e.key === 'P') && running) {
+        paused = !paused;
+        if (!paused) draw();
+        return;
+      }
+      const d = DIRS[e.key];
+      if (d && running) {
+        // Prevent 180° reversal
+        if (d.x !== -dir.x || d.y !== -dir.y) nextDir = d;
+        e.preventDefault();
+      }
+    });
+
+    // Mobile arrow pad
+    document.querySelectorAll('.arrow-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const map = { UP: {x:0,y:-1}, DOWN: {x:0,y:1}, LEFT: {x:-1,y:0}, RIGHT: {x:1,y:0} };
+        const d = map[btn.dataset.dir];
+        if (d && running && (d.x !== -dir.x || d.y !== -dir.y)) nextDir = d;
+      });
+    });
+
+    document.getElementById('startBtn').addEventListener('click', startGame);
+    document.getElementById('restartBtn').addEventListener('click', startGame);
+
+    // Initial draw
+    initGame();
+    draw();
+  </script>
+</body>
+</html>

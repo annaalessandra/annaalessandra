@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journal — Anna Alessandra</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/blog.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <a href="index.html" class="nav-logo">Anna Alessandra</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#portfolio">Work</a></li>
+      <li><a href="blog.html" class="active-link">Journal</a></li>
+      <li><a href="snake.html">Play</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="blog-hero">
+    <div class="blog-hero-grain"></div>
+    <div class="container">
+      <p class="section-label">Journal</p>
+      <h1 class="blog-hero-title">Thoughts, process<br /><em>& observations</em></h1>
+    </div>
+  </header>
+
+  <main class="blog-main container">
+    <div class="blog-list" id="blogList">
+      <!-- Rendered by JS -->
+    </div>
+  </main>
+
+  <!-- Article Modal / Full Post -->
+  <div class="post-modal" id="postModal">
+    <div class="post-modal-inner">
+      <button class="post-close" id="postClose" aria-label="Close">✕</button>
+      <div class="post-content" id="postContent"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-logo">Anna Alessandra</p>
+      <p class="footer-copy">© <span id="year"></span> Anna Alessandra.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#portfolio">Work</a></li>
+        <li><a href="snake.html">Play</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/blog.js"></script>
+</body>
+</html>
