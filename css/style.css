@@ -15,8 +15,8 @@
   --light-mid: #a89080;
   --shadow: rgba(46,36,32,0.12);
 
-  --font-display: 'Cormorant Garamond', serif;
-  --font-body: 'Jost', sans-serif;
+  --font-display: 'Cascadia Mono', serif;
+  --font-body: 'Cascadia Mono', sans-serif;
 
   --max-w: 1200px;
   --nav-h: 70px;
